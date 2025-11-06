@@ -1,21 +1,41 @@
-#include<iostream>
-using namespace std ;
-int findmax(int arr[] ,int n ){
-    if(n== 1){
-        return arr[0];
+#include <iostream>
+#include <stack>
+using namespace std;
+
+void delete_middle(stack<int>& st, int count, int size) {
+    // Base case
+    if (count == size / 2) {
+        st.pop(); 
+        return;
     }
-    int maxrest = findmax(arr+1,n-1);
-    if(arr[0]>maxrest){
-        return arr[0];
-    }
-    else{
-        return maxrest;
-    }
+
+    // Remove top element
+    int top_val = st.top();
+    st.pop();
+
+    // Recursive call
+    delete_middle(st, count + 1, size);
+    st.push(top_val);
 }
-int main()
-{
-    int arr[] = { 1 , 2 , 6 , 5 , 8 , 2 , 4 };
-    int n = 7;
-    cout<< "The maximum in the array is : "<< findmax(arr,n);
-     return 0 ;
+
+int main() {
+    stack<int> st;
+    st.push(1);
+    st.push(2);
+    st.push(3);
+    st.push(4);
+    st.push(5);
+  
+
+    int size = st.size();
+
+    delete_middle(st, 0, size);
+
+    cout << "Stack after deleting middle element:\n";
+    while (!st.empty()) {
+        cout << st.top() << " ";
+        st.pop();
+    }
+    cout << endl;
+    return 0;
 }

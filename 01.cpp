@@ -1,23 +1,24 @@
 #include <iostream>
 using namespace std;
-int countdigit(int n)
-{
-    if (n == 0)
-    {
-        return 0;
-    }
-    int newdigit = n / 10;
-    return 1 + countdigit(newdigit);
-}
-int main()
-{
-    int n;
-    cout << "Enter the number which you want to count  : ";
-    cin >> n;
-    if (n == 0)
-        cout << "The digits in the number is: 1" << endl;
-    else
-        cout << "The digits in the number is: " << countdigit(n) << endl;
 
+void solve(int ones, int zeros, int n, string s) {
+    // base case
+    if (s.length() == n) {
+        cout << s << " ";
+        return;
+    }
+
+    solve(ones + 1, zeros, n, s + "1");
+
+    if (ones > zeros) {
+        solve(ones, zeros + 1, n, s + "0");
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter N: ";
+    cin >> n;
+    solve(0, 0, n, "");
     return 0;
 }

@@ -1,28 +1,37 @@
-#include<iostream>
-using namespace std ;
-bool checkdigit(string str , int i , int n ){
-    if(i == n ){
-        return true;
-    }
-    if(str[i] < '0' ||str[i]  > '9' ){
-        return false;
-    }
-    return checkdigit(str , i+1 , n);
-}
-int main()
-{
-    string str;
-    cout<< "Enter the string you want to check : ";
-    cin >> str;
-    int i = 0 ;
-    int n = str.length();
+#include <iostream>
+#include <vector>
+using namespace std;
 
-    bool checker = checkdigit(str , 0, n);
-    if(checker){
-        cout<< "True , string contain only digit";
+void backtrack(int start, int n, int k, vector<int>& current, vector<vector<int>>& result) {
+    //Base case 
+    if (current.size() == k) {
+        result.push_back(current);
+        return;
     }
-    else{
-        cout<< "False ";
+
+    // loop from current number to n
+    for (int i = start; i <= n; i++) {
+        current.push_back(i);
+        backtrack(i + 1, n, k, current, result);
+        current.pop_back();              
     }
-     return 0 ;
+}
+
+int main() {
+    int n, k;
+    cout << "Enter n and k: ";
+    cin >> n >> k;
+
+    vector<vector<int>> result;
+    vector<int> current;
+
+    backtrack(1, n, k, current, result);
+
+    cout << "All combinations:\n";
+    for (auto comb : result) {
+        cout << "[ ";
+        for (int num : comb) cout << num << " ";
+        cout << "]\n";
+    }
+    return 0;
 }
